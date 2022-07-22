@@ -52,7 +52,7 @@
     </van-grid>
 
     <van-cell title="消息通知" is-link></van-cell>
-    <van-cell title="小智同学" class="mb-9" is-link></van-cell>
+    <van-cell title="小智同学" class="mb-9" is-link to="/chat"></van-cell>
     <van-cell
       v-if="user"
       title="退出登录"

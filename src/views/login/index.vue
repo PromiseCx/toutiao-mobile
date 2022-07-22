@@ -95,7 +95,12 @@ export default {
         this.$store.commit("setUser", data.data);
         this.$toast.success("登录成功！");
 
-        this.$router.back();
+        // localStorage.setItem('refresh_token',data.data.refresh_token);
+
+        // this.$router.back();
+        this.$router.replace({
+          path:"/layout/home"
+        })
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail("手机号或者是验证码错误！");

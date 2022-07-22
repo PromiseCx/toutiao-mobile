@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { getItem } from "@/utils/storage"
 
 Vue.use(VueRouter)
 
@@ -57,11 +58,26 @@ const routes = [
     path:"/user/profile",
     name:"user-profile",
     component:()=>import('@/views/user-profile')
+  },
+  {
+    path:"/chat",
+    name:"chat",
+    component:()=>import('@/views/chat')
   }
 ]
 
 const router = new VueRouter({
   routes
 })
+
+//路由的全局前置守卫,在路由发生真正跳转之前，执行此函数
+// 此函数，可以决定路由是否真正的跳转
+// router.beforeEach((to,from,next)=>{
+//   if(getItem('TOUTIAO_USER').token.length>0 && to.path === '/login') {
+//     next(false);
+//   }else {
+//     next();
+//   }
+// })
 
 export default router

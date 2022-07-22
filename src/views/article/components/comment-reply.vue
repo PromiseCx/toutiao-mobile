@@ -10,14 +10,23 @@
     <div class="scroll-wrap">
       <comment-item :comment="comment"></comment-item>
       <van-cell title="全部回复"></van-cell>
-      <comment-list :source="comment.com_id" type="c" :list="commentList"></comment-list>
+      <comment-list
+        :source="comment.com_id"
+        type="c"
+        :list="commentList"
+      ></comment-list>
     </div>
 
     <!-- add commentlist -->
     <div class="post-wrap">
-      <van-button size="small" round class="post-btn" @click="isPostShow = true">写评论</van-button>
+      <van-button size="small" round class="post-btn" @click="isPostShow = true"
+        >写评论</van-button
+      >
       <van-popup v-model="isPostShow" position="bottom">
-        <comment-post :target="comment.com_id" @post-success="onPostSuccess"></comment-post>
+        <comment-post
+          :target="comment.com_id"
+          @post-success="onPostSuccess"
+        ></comment-post>
       </van-popup>
     </div>
   </div>
@@ -33,7 +42,7 @@ export default {
   data() {
     return {
       isPostShow: false,
-      commentList:[]
+      commentList: [],
     };
   },
   components: {
@@ -47,13 +56,13 @@ export default {
       required: true,
     },
   },
-  methods:{
+  methods: {
     onPostSuccess(data) {
-        this.comment.reply_count++;
-        this.isPostShow = false;
-        this.commentList.unshift(data.new_obj);
-    }
-  }
+      this.$emit("pdate-reply_count");
+      this.isPostShow = false;
+      this.commentList.unshift(data.new_obj);
+    },
+  },
 };
 </script>
 

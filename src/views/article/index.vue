@@ -177,6 +177,7 @@
         v-if="isReplyShow"
         :comment="currentComment"
         @close="isReplyShow = false"
+        @update-reply_count="currentComment.reply_count++"
       ></comment-reply>
     </van-popup>
   </div>

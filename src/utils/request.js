@@ -1,6 +1,7 @@
 import axios from "axios"
 import store from "@/store"
-
+import { getNewTokenAPI } from "@/api/user"
+import { Notify } from "vant"
 
 const request = axios.create({
     baseURL: "http://toutiao.itheima.net"
@@ -22,5 +23,14 @@ request.interceptors.request.use(function (config) {
 })
 
 // 响应拦截器
+request.interceptors.response.use(function(response) {
+    return response
+}, async function(error) {
+    if(error.response.status === 401) {
+        Notify({type:'warning',message:'身份已过期'})
+        // const res  =  await getNewTokenAPI();
+        // console.log(res);
+    }
+})
 
 export default request

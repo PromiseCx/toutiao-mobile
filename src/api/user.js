@@ -63,3 +63,11 @@ export const upateUserPhotoAPI = data=>request({
     data
 })
 
+export const getNewTokenAPI = ()=>request({
+    url:'/v1_0/authorizations',
+    method:'put',
+    headers:{
+        Authorization: 'Bearer '+ localStorage.getItem('refresh_token')
+    }
+})
+

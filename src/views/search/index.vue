@@ -72,7 +72,7 @@ export default {
       // 搜索历史记录
       // 不要有重复搜索历史记录,最新的排在最前面
       const index = this.searchHistories.indexOf(val);
-      if (index != -1) {
+      if (index !== -1) {
         this.searchHistories.splice(index, 1);
       }
       this.searchHistories.unshift(val);
