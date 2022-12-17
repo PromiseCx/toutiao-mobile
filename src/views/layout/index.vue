@@ -27,13 +27,13 @@
 <script>
 
 export default {
-  name: "LayoutIndex",
-  data() {
+  name: 'LayoutIndex',
+  data () {
     return {
-      active: 0,
-    };
-  },
-};
+      active: 0
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

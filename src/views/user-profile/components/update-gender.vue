@@ -13,47 +13,47 @@
 </template>
 
 <script>
-import { updateUserProfileAPI } from "@/api/user";
+import { updateUserProfileAPI } from '@/api/user'
 
 export default {
-  name: "UpdateGender",
-  data() {
+  name: 'UpdateGender',
+  data () {
     return {
-      columns: ["男", "女"],
-      localGender:this.value
-    };
+      columns: ['男', '女'],
+      localGender: this.value
+    }
   },
   props: {
     value: {
       type: Number,
-      required: true,
-    },
-  },
-  methods: {
-    async onConfirm() {
-        this.$toast.loading({
-            message:"更新中...",
-            forbidClick:true,
-            duration:0
-        });
-        try {
-            const localGender = this.localGender;
-
-             await updateUserProfileAPI({
-                gender:localGender
-           });
-           this.$emit('input',localGender);
-           this.$emit('close');
-           this.$toast.success('更新性别成功！');
-        } catch (error) {
-            this.$toast('更新性别失败！');
-        }
-    },
-    onChange(picker,value,index) {
-        this.localGender = index;
+      required: true
     }
   },
-};
+  methods: {
+    async onConfirm () {
+      this.$toast.loading({
+        message: '更新中...',
+        forbidClick: true,
+        duration: 0
+      })
+      try {
+        const localGender = this.localGender
+
+        await updateUserProfileAPI({
+          gender: localGender
+        })
+        this.$emit('input', localGender)
+        this.$emit('close')
+        this.$toast.success('更新性别成功！')
+      } catch (error) {
+        this.$toast('更新性别失败！')
+      }
+    },
+    onChange (picker, value, index) {
+      this.localGender = index
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

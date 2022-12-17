@@ -23,48 +23,48 @@
 </template>
 
 <script>
-import { updateUserProfileAPI } from "@/api/user";
+import { updateUserProfileAPI } from '@/api/user'
 
 export default {
-  name: "UpdateName",
-  data() {
+  name: 'UpdateName',
+  data () {
     return {
       // 注意不能让输入框直接绑定value，因为会直接修改prop里的数据，会报错
-      localName: this.value,
-    };
+      localName: this.value
+    }
   },
   props: {
     value: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
-    async onConfirm() {
+    async onConfirm () {
       this.$toast.loading({
-        message:'保存中...',
-        forbidClick:true,
-        duration:0
+        message: '保存中...',
+        forbidClick: true,
+        duration: 0
       })
       try {
-        const localName = this.localName;
+        const localName = this.localName
         if (!localName.length) {
-          this.$toast("用户昵称不能为空！");
-          return;
+          this.$toast('用户昵称不能为空！')
+          return
         }
 
         await updateUserProfileAPI({
-          name: localName,
-        });
-        this.$emit("input", localName);
-        this.$emit("close");
-        this.$toast("更新用户昵称成功！");
+          name: localName
+        })
+        this.$emit('input', localName)
+        this.$emit('close')
+        this.$toast('更新用户昵称成功！')
       } catch (error) {
-        this.$toast("更新昵称失败！");
+        this.$toast('更新昵称失败！')
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

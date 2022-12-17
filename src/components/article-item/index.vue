@@ -1,5 +1,5 @@
 <template>
-  <!-- 
+  <!--
     cell的to属性和routerlink的to属性是一样的
 
   路由跳转：
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="label-info-wrap">
-        <span>{{ article.aut_name }}</span>
+        <span>极速头条</span>
         <span>{{ article.comm_count }}评论</span>
         <span>{{ article.pubdate | relativeTime }}</span>
       </div>
@@ -52,14 +52,14 @@
 
 <script>
 export default {
-  name: "ArticleItem",
+  name: 'ArticleItem',
   props: {
     article: {
       type: Object,
-      required: true,
-    },
-  },
-};
+      required: true
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

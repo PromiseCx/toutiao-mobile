@@ -8,45 +8,45 @@
 </template>
 
 <script>
-import { addCollectAPI, deleteCollectAPI } from "@/api/article";
+import { addCollectAPI, deleteCollectAPI } from '@/api/article'
 
 export default {
-  name: "CollectArticle",
+  name: 'CollectArticle',
   props: {
     value: {
       type: Boolean,
-      required: true,
+      required: true
     },
     articleId: {
       type: [String, Number],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      loading: false,
-    };
+      loading: false
+    }
   },
   methods: {
-    async onCollect() {
-      this.loading = true;
+    async onCollect () {
+      this.loading = true
       try {
         if (this.value) {
-          await deleteCollectAPI(this.articleId);
+          await deleteCollectAPI(this.articleId)
         } else {
-          await addCollectAPI(this.articleId);
+          await addCollectAPI(this.articleId)
         }
 
         // 自定义事件修改数据，不是立即的
-        this.$emit("input", !this.value);
-        this.$toast.success(!this.value ? "收藏成功" : "取消收藏");
+        this.$emit('input', !this.value)
+        this.$toast.success(!this.value ? '收藏成功' : '取消收藏')
       } catch (error) {
-        this.$toast("操作失败请重试！");
+        this.$toast('操作失败请重试！')
       }
-      this.loading = false;
-    },
-  },
-};
+      this.loading = false
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

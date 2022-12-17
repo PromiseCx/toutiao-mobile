@@ -1,7 +1,7 @@
 <template>
   <div class="article-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="黑马头条">
+    <van-nav-bar class="page-nav-bar" title="极速头条">
       <template #left>
         <van-icon name="arrow-left" size="18" @click="$router.back()" />
       </template>
@@ -30,7 +30,7 @@
             fit="cover"
             :src="article.aut_photo"
           />
-          <div slot="title" class="user-name">{{ article.aut_name }}</div>
+          <div slot="title" class="user-name"> 极速头条 </div>
           <div slot="label" class="publish-date">
             {{ article.pubdate | relativeTime }}
           </div>
@@ -55,11 +55,11 @@
             @click="onFollow"
             >关注</van-button -->
 
-          <!-- 
+          <!--
                在模板当中，$event是事件参数
              -->
 
-          <!-- 
+          <!--
               当我们传给子组件的数据，既要使用还要修改
               传递：props
               :is-followed="article.is_followed"
@@ -99,7 +99,7 @@
           @reply-click="onReplyClick"
         ></comment-list>
 
-        <!-- 
+        <!--
 
           应该将文章底部放在，加载成功模板之后，
           因为，在页面渲染时，文章底部绑定数据会优先于页面发送请求来请求数据，
@@ -162,14 +162,14 @@
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
-    <!-- 
+    <!--
 
   弹出层是懒渲染，只有在第一次展示的时候才会渲染里面的内容
   之后他的关闭和显示都是在切换内容的显示和隐藏
-  
+
  -->
     <van-popup v-model="isReplyShow" position="bottom" style="height: 100%">
-      <!-- 
+      <!--
         使用v-if来解决，弹出层懒加载的问题,
         让他重新渲染，关闭之后销毁组件即可，就会重新渲染
        -->
@@ -184,38 +184,38 @@
 </template>
 
 <script>
-import { getArticleById } from "@/api/article";
-import { ImagePreview } from "vant";
-import FollowUser from "@/components/follow-user";
-import CollectArticle from "@/components/collect-article";
-import LikeArticle from "@/components/like-article";
-import CommentList from "./components/comment-list.vue";
-import CommentPost from "./components/comment-post.vue";
-import CommentReply from "./components/comment-reply.vue";
+import { getArticleById } from '@/api/article'
+import { ImagePreview } from 'vant'
+import FollowUser from '@/components/follow-user'
+import CollectArticle from '@/components/collect-article'
+import LikeArticle from '@/components/like-article'
+import CommentList from './components/comment-list.vue'
+import CommentPost from './components/comment-post.vue'
+import CommentReply from './components/comment-reply.vue'
 
 export default {
-  name: "ArticleIndex",
+  name: 'ArticleIndex',
   components: {
     FollowUser,
     CollectArticle,
     LikeArticle,
     CommentList,
     CommentPost,
-    CommentReply,
+    CommentReply
   },
   //  给所有的后代组件提供数据,  依赖注入
-  provide: function() {
+  provide: function () {
     return {
-      articleId:this.articleId
+      articleId: this.articleId
     }
   },
   props: {
     articleId: {
       type: [Number, String],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       article: {},
       loading: true,
@@ -225,61 +225,61 @@ export default {
       isPostShow: false,
       commentList: [],
       isReplyShow: false,
-      currentComment: {},
-    };
+      currentComment: {}
+    }
   },
   computed: {},
   watch: {},
-  created() {
-    this.loadArticle();
+  created () {
+    this.loadArticle()
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    async loadArticle() {
-      this.loading = true;
+    async loadArticle () {
+      this.loading = true
       try {
-        const { data } = await getArticleById(this.articleId);
+        const { data } = await getArticleById(this.articleId)
         // 数据驱动视图不是立即的
-        this.article = data.data;
+        this.article = data.data
         setTimeout(() => {
-          this.previewImage();
-        }, 0);
+          this.previewImage()
+        }, 0)
 
-        this.loading = false;
+        this.loading = false
       } catch (error) {
         if (error.response && error.response.status === 404) {
-          this.errStatus = 404;
+          this.errStatus = 404
         }
-        this.$toast("getArticleById fail");
+        this.$toast('getArticleById fail')
       }
-      this.loading = false;
+      this.loading = false
     },
 
-    previewImage() {
-      const articleContent = this.$refs["article-content"];
-      const imgs = articleContent.querySelectorAll("img");
-      const images = [];
+    previewImage () {
+      const articleContent = this.$refs['article-content']
+      const imgs = articleContent.querySelectorAll('img')
+      const images = []
       imgs.forEach((img, index) => {
-        images.push(img.src);
+        images.push(img.src)
         img.onclick = () => {
           ImagePreview({
             images,
-            startPosition: index,
-          });
-        };
-      });
+            startPosition: index
+          })
+        }
+      })
     },
-    onPostSuccess(data) {
-      this.isPostShow = false;
-      this.commentList.unshift(data.new_obj);
+    onPostSuccess (data) {
+      this.isPostShow = false
+      this.commentList.unshift(data.new_obj)
     },
 
-    onReplyClick(comment) {
-      this.currentComment = comment;
-      this.isReplyShow = true;
-    },
-  },
-};
+    onReplyClick (comment) {
+      this.currentComment = comment
+      this.isReplyShow = true
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

@@ -21,11 +21,11 @@
 
 <script>
 export default {
-  name: "SearchHistory",
-  data() {
+  name: 'SearchHistory',
+  data () {
     return {
-      isDeleteShow: false,
-    };
+      isDeleteShow: false
+    }
   },
   /**
    * prop 数据 只读属性
@@ -35,21 +35,21 @@ export default {
   props: {
     searchHistories: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
-  methods:{
-    onSearchItemClick(item,index) {
-      if(this.isDeleteShow) {
+  methods: {
+    onSearchItemClick (item, index) {
+      if (this.isDeleteShow) {
         // 删除状态
-        this.searchHistories.splice(index,1);
-      }else {
+        this.searchHistories.splice(index, 1)
+      } else {
         // 非删除状态
-        this.$emit('search',item);
+        this.$emit('search', item)
       }
     }
   }
-};
+}
 </script>
 
 <style scoped lang="less">

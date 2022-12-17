@@ -83,52 +83,51 @@
 </template>
 
 <script>
-import { getUserProfileAPI } from "@/api/user";
-import UpdateName from "./components/update-name.vue";
-import UpdateGender from "./components/update-gender.vue";
-import UpdateBirthday from "./components/update-birthday.vue";
-import UpdatePhoto from "./components/update-photo.vue";
+import { getUserProfileAPI } from '@/api/user'
+import UpdateName from './components/update-name.vue'
+import UpdateGender from './components/update-gender.vue'
+import UpdateBirthday from './components/update-birthday.vue'
+import UpdatePhoto from './components/update-photo.vue'
 
 export default {
-  name: "UserProfile",
+  name: 'UserProfile',
   components: {
     UpdateName,
     UpdateGender,
     UpdateBirthday,
-    UpdatePhoto,
+    UpdatePhoto
   },
-  data() {
+  data () {
     return {
       user: {},
       isUpdateNameShow: false,
       isUpdateGenderShow: false,
       isUpdateBirthdayShow: false,
       isUpdatePhotoShow: false,
-      img: null,
-    };
+      img: null
+    }
   },
-  created() {
-    this.loadUserProfile();
+  created () {
+    this.loadUserProfile()
   },
   methods: {
-    async loadUserProfile() {
+    async loadUserProfile () {
       try {
-        const { data } = await getUserProfileAPI();
-        this.user = data.data;
+        const { data } = await getUserProfileAPI()
+        this.user = data.data
       } catch (error) {
-        this.$toast("获取失败！");
+        this.$toast('获取失败！')
       }
     },
-    onFileChange() {
-      const file = this.$refs.file.files[0];
-      this.img = window.URL.createObjectURL(file);
-      this.isUpdatePhotoShow = true;
-
+    onFileChange () {
+      const file = this.$refs.file.files[0]
+      this.img = window.URL.createObjectURL(file)
+      this.isUpdatePhotoShow = true
       // 如果选了同一个文件的话不会触发change事件，每次使用完毕后，都要把它的value清空
-      this.$refs.file.value = "";
-    },
-  },
-};
+      this.$refs.file.value = ''
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

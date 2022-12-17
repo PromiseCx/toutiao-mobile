@@ -17,53 +17,53 @@
 </template>
 
 <script>
-import { addCommentAPI } from "@/api/comment";
+import { addCommentAPI } from '@/api/comment'
 export default {
-  name: "CommentPost",
+  name: 'CommentPost',
   components: {},
   inject: {
     articleId: {
       type: [Number, String],
-      default: null,
-    },
+      default: null
+    }
   },
   props: {
     target: {
       type: [Number, String],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      message: "",
-    };
+      message: ''
+    }
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created () {},
+  mounted () {},
   methods: {
-    async onPost() {
+    async onPost () {
       this.$toast.loading({
-        message: "发布中...",
+        message: '发布中...',
         forbidClick: true, // 禁用背景点击
-        duration: 0, // 0 表示持续展示
-      });
+        duration: 0 // 0 表示持续展示
+      })
       try {
         const { data } = await addCommentAPI({
           target: this.target,
           content: this.message,
-          art_id: this.articleId?this.articleId:null,
-        });
-        this.message = "";
-        this.$emit("post-success", data.data);
-        this.$toast("发布成功！");
+          art_id: this.articleId ? this.articleId : null
+        })
+        this.message = ''
+        this.$emit('post-success', data.data)
+        this.$toast('发布成功！')
       } catch (error) {
-        this.$toast("操作失败，请重试！");
+        this.$toast('操作失败，请重试！')
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

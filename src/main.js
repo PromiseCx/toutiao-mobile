@@ -18,21 +18,21 @@ Vue.config.productionTip = false
 
 // 封装中间件函数的插件
 const directiveObj = {
-  install(Vue) {
+  install (Vue) {
     Vue.directive('fofo', {
-      inserted(el) {
+      inserted (el) {
         /**
          * 指令所在的是van-search组件，
          *组件的根标签是div，input在内部
          */
-        let theInput = el.querySelector('input');
-        theInput.focus();
+        const theInput = el.querySelector('input')
+        theInput.focus()
       }
     })
   }
 }
 // 执行目标对象的instal方法并传入Vue类
-Vue.use(directiveObj);
+Vue.use(directiveObj)
 
 new Vue({
   router,

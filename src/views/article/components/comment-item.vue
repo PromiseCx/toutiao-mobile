@@ -37,45 +37,45 @@
 </template>
 
 <script>
-import { addCommentLikeAPI, deleteCommentLikeAPI } from "@/api/comment";
+import { addCommentLikeAPI, deleteCommentLikeAPI } from '@/api/comment'
 
 export default {
-  name: "CommentItem",
+  name: 'CommentItem',
   components: {},
   props: {
     comment: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      commentLoading: false,
-    };
+      commentLoading: false
+    }
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created () {},
+  mounted () {},
   methods: {
-    async onCommentLike() {
-      this.commentLoading = true;
+    async onCommentLike () {
+      this.commentLoading = true
       try {
         if (this.comment.is_liking) {
-          await deleteCommentLikeAPI(this.comment.com_id);
-          this.comment.like_count--;
+          await deleteCommentLikeAPI(this.comment.com_id)
+          this.comment.like_count--
         } else {
-          await addCommentLikeAPI(this.comment.com_id);
-          this.comment.like_count++;
+          await addCommentLikeAPI(this.comment.com_id)
+          this.comment.like_count++
         }
-        this.comment.is_liking = !this.comment.is_liking;
+        this.comment.is_liking = !this.comment.is_liking
       } catch (error) {
-        this.$toast("操作失败，请稍后重试！");
+        this.$toast('操作失败，请稍后重试！')
       }
-      this.commentLoading = false;
-    },
-  },
-};
+      this.commentLoading = false
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

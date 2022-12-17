@@ -59,81 +59,81 @@
 </template>
 
 <script>
-import { loginAPI, sendSmsAPI } from "@/api/user";
+import { loginAPI, sendSmsAPI } from '@/api/user'
 
 export default {
-  name: "LoginPage",
+  name: 'LoginPage',
   components: {},
   props: {},
-  data() {
+  data () {
     return {
       user: {
-        mobile: "",
-        code: "",
+        mobile: '',
+        code: ''
       },
-      isCountDownShow: false,
-    };
+      isCountDownShow: false
+    }
   },
   computed: {},
   watch: {},
-  created() {},
-  mounted() {},
+  created () {},
+  mounted () {},
   methods: {
-    async onSubmit() {
+    async onSubmit () {
       // 1.获取表单数据
-      const user = this.user;
+      const user = this.user
 
       // 2.表单验证 在组件中必须通过this.$toast来调用Toast组件
       this.$toast.loading({
-        message: "登录中...",
+        message: '登录中...',
         forbidClick: true, // 禁用背景点击
-        duration: 0, // 0 表示持续展示
-      });
+        duration: 0 // 0 表示持续展示
+      })
       // 3.提交表单请求登录
       try {
-        const { data } = await loginAPI(user);
-        this.$store.commit("setUser", data.data);
-        this.$toast.success("登录成功！");
+        const { data } = await loginAPI(user)
+        this.$store.commit('setUser', data.data)
+        this.$toast.success('登录成功！')
 
         // localStorage.setItem('refresh_token',data.data.refresh_token);
 
         // this.$router.back();
         this.$router.replace({
-          path:"/layout/home"
+          path: '/layout/home'
         })
       } catch (err) {
         if (err.response.status === 400) {
-          this.$toast.fail("手机号或者是验证码错误！");
+          this.$toast.fail('手机号或者是验证码错误！')
         } else {
-          this.$toast.fail("登陆失败，稍后重试！");
+          this.$toast.fail('登陆失败，稍后重试！')
         }
       }
       // 4.根据请求结果进行后续操作
     },
-    async onSendSms() {
+    async onSendSms () {
       // 1. 校验手机号码
       try {
-        await this.$refs.loginForm.validate("mobile");
+        await this.$refs.loginForm.validate('mobile')
       } catch (err) {
-        return console.log("fail", err);
+        return console.log('fail', err)
       }
       // 2. 验证通过，显示倒计时
-      this.isCountDownShow = true;
+      this.isCountDownShow = true
       // 3. 请求发送验证码
       try {
-        await sendSmsAPI(this.user.mobile);
-        this.$toast("发送验证码成功！");
+        await sendSmsAPI(this.user.mobile)
+        this.$toast('发送验证码成功！')
       } catch (err) {
-        this.isCountDownShow = false;
+        this.isCountDownShow = false
         if (err.response.status === 429) {
-          this.$toast("发送验证码太频繁了。稍后再试！");
+          this.$toast('发送验证码太频繁了。稍后再试！')
         } else {
-          this.$toast("发送验证码失败！");
+          this.$toast('发送验证码失败！')
         }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

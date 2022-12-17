@@ -40,69 +40,69 @@
 </template>
 
 <script>
-import { io } from "socket.io-client";
-import { getItem } from "@/utils/storage";
+import { io } from 'socket.io-client'
+import { getItem } from '@/utils/storage'
 
 export default {
-  name: "Chat",
-  data() {
+  name: 'Chat',
+  data () {
     return {
-      word: "",
+      word: '',
       list: [
-        { name: "xz", msg: "hi,你好!我是小智" },
-        { name: "me", msg: "我是编程小王子" },
+        { name: 'xz', msg: 'hi,你好!我是小智' },
+        { name: 'me', msg: '我是编程小王子' }
       ],
-      socket: null,
-    };
+      socket: null
+    }
   },
-  created() {
-    this.socket = io("ws://toutiao.itheima.net", {
+  created () {
+    this.socket = io('ws://toutiao.itheima.net', {
       query: {
-        token: getItem("TOUTIAO_USER").token,
+        token: getItem('TOUTIAO_USER').token
       },
-      transports: ["websocket"],
-    });
+      transports: ['websocket']
+    })
 
-    this.socket.on("connect", () => {
-      console.log("login success");
-    });
+    this.socket.on('connect', () => {
+      console.log('login success')
+    })
 
-    this.socket.on("message", (obj) => {
+    this.socket.on('message', (obj) => {
       this.list.push({
-        name: "xz",
-        msg: obj.msg,
-      });
-    });
+        name: 'xz',
+        msg: obj.msg
+      })
+    })
     // dom更新是异步的，所以不能直接获取，获取道德是上一次的列表数据
   },
   methods: {
-    sendFn() {
-      if (this.word.trim().length === 0) return;
-      this.socket.emit("message", {
+    sendFn () {
+      if (this.word.trim().length === 0) return
+      this.socket.emit('message', {
         msg: this.word,
-        timestamp: new Date().getTime(),
-      });
+        timestamp: new Date().getTime()
+      })
 
       this.list.push({
         msg: this.word,
-        name: "me",
-      });
+        name: 'me'
+      })
 
       this.$nextTick(() => {
-        const theDiv = document.querySelector(".chat-list>div:last-child");
+        const theDiv = document.querySelector('.chat-list>div:last-child')
         theDiv.scrollIntoView({
-          behavior: "smooth",
-        });
-      });
-      this.word = "";
-    },
+          behavior: 'smooth'
+        })
+      })
+      this.word = ''
+    }
   },
-  destroyed() {
-    this.socket.close();
-    this.socket = null;
+  destroyed () {
+    this.socket.close()
+    this.socket = null
   },
-  watch: {},
-};
+  watch: {}
+}
 </script>
 
 <style scoped lang="less">

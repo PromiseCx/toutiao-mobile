@@ -50,60 +50,60 @@
 import {
   getAllChannelsAPI,
   addUserChannelAPI,
-  deleteUserChannelAPI,
-} from "@/api/channel";
-import { mapState } from "vuex";
-import { setItem } from "@/utils/storage";
+  deleteUserChannelAPI
+} from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/storage'
 
 export default {
-  name: "ChannelEdit",
+  name: 'ChannelEdit',
   props: {
     myChannels: {
       type: Array,
-      required: true,
+      required: true
     },
     active: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
       allChannels: [],
       isEdit: false,
-      fixedChannels: [0],
-    };
+      fixedChannels: [0]
+    }
   },
   computed: {
-    recommendChannels() {
-      const channels = [];
+    recommendChannels () {
+      const channels = []
       this.allChannels.forEach((channel) => {
         const ret = this.myChannels.find((myChannels) => {
-          return myChannels.id === channel.id;
-        });
+          return myChannels.id === channel.id
+        })
 
         if (!ret) {
-          channels.push(channel);
+          channels.push(channel)
         }
-      });
-      return channels;
+      })
+      return channels
     },
-    ...mapState(["user"]),
+    ...mapState(['user'])
   },
-  created() {
-    this.loadAllChannels();
+  created () {
+    this.loadAllChannels()
   },
   methods: {
-    async loadAllChannels() {
+    async loadAllChannels () {
       try {
-        const { data } = await getAllChannelsAPI();
-        this.allChannels = data.data.channels;
+        const { data } = await getAllChannelsAPI()
+        this.allChannels = data.data.channels
       } catch (error) {
-        this.$toast("fail get Allchannels");
+        this.$toast('fail get Allchannels')
       }
     },
-    async onAddChannel(channel) {
-      this.myChannels.push(channel);
+    async onAddChannel (channel) {
+      this.myChannels.push(channel)
 
       // 数据持久化处理
       // 未登录将数据存储到本地
@@ -112,47 +112,47 @@ export default {
         try {
           await addUserChannelAPI({
             id: channel.id,
-            seq: this.myChannels.length,
-          });
+            seq: this.myChannels.length
+          })
         } catch (error) {
-          this.$toast("保存失败，请稍后再试！");
+          this.$toast('保存失败，请稍后再试！')
         }
       } else {
-        setItem("TOUTIAO_CHANNELS", this.myChannels);
+        setItem('TOUTIAO_CHANNELS', this.myChannels)
       }
     },
-    onMyChannelClick(channel, index) {
+    onMyChannelClick (channel, index) {
       if (this.isEdit) {
         if (this.fixedChannels.includes(channel.id)) {
-          return;
+          return
         }
 
         // 根据计算属性会观测依赖数据的变化来自动计算数据，
         // 我的频道删除后会自动加入到推荐列表当中
-        this.myChannels.splice(index, 1);
+        this.myChannels.splice(index, 1)
 
         if (index <= this.active) {
-          this.$emit("update-active", this.active - 1, true);
+          this.$emit('update-active', this.active - 1, true)
         }
-        this.deleteChannel(channel);
+        this.deleteChannel(channel)
       } else {
-        this.$emit("update-active", index, false);
+        this.$emit('update-active', index, false)
       }
     },
-    async deleteChannel(channel) {
+    async deleteChannel (channel) {
       try {
         if (this.user) {
-          await deleteUserChannelAPI(channel.id);
+          await deleteUserChannelAPI(channel.id)
         } else {
           // 未登录，将数据更新到本地
-          setItem("TOUTIAO_CHANNELS", this.myChannels);
+          setItem('TOUTIAO_CHANNELS', this.myChannels)
         }
       } catch (error) {
-        this.$toast("操作失败，请稍后再试！");
+        this.$toast('操作失败，请稍后再试！')
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

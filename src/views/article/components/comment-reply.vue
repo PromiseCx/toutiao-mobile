@@ -33,37 +33,37 @@
 </template>
 
 <script>
-import CommentItem from "./comment-item.vue";
-import CommentList from "./comment-list.vue";
-import CommentPost from "./comment-post.vue";
+import CommentItem from './comment-item.vue'
+import CommentList from './comment-list.vue'
+import CommentPost from './comment-post.vue'
 
 export default {
-  name: "CommentReply",
-  data() {
+  name: 'CommentReply',
+  data () {
     return {
       isPostShow: false,
-      commentList: [],
-    };
+      commentList: []
+    }
   },
   components: {
     CommentItem,
     CommentList,
-    CommentPost,
+    CommentPost
   },
   props: {
     comment: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
-    onPostSuccess(data) {
-      this.$emit("pdate-reply_count");
-      this.isPostShow = false;
-      this.commentList.unshift(data.new_obj);
-    },
-  },
-};
+    onPostSuccess (data) {
+      this.$emit('pdate-reply_count')
+      this.isPostShow = false
+      this.commentList.unshift(data.new_obj)
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

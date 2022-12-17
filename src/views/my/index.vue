@@ -64,52 +64,52 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { getUserInfoAPI } from "@/api/user";
+import { mapState } from 'vuex'
+import { getUserInfoAPI } from '@/api/user'
 
 export default {
-  name: "MyIndex",
-  data() {
+  name: 'MyIndex',
+  data () {
     return {
-      userInfo: {},
-    };
+      userInfo: {}
+    }
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(['user'])
   },
   methods: {
-    onLogout() {
+    onLogout () {
       // 退出提示
       // 在组件中调用都要用 this.$..
       this.$dialog
         .confirm({
-          title: "确认退出吗？",
+          title: '确认退出吗？'
         })
         .then(() => {
           // on confirm
           // 确认退出：清除登录状态
-          this.$store.commit("setUser", null);
+          this.$store.commit('setUser', null)
         })
         .catch(() => {
           // on cancel
-        });
+        })
       //
     },
-    async loadUserInfo() {
+    async loadUserInfo () {
       try {
-        const { data } = await getUserInfoAPI();
-        this.userInfo = data.data;
+        const { data } = await getUserInfoAPI()
+        this.userInfo = data.data
       } catch (err) {
-        this.$toast("huoqushibai");
+        this.$toast('huoqushibai')
       }
-    },
-  },
-  created() {
-    if (this.user) {
-      this.loadUserInfo();
     }
   },
-};
+  created () {
+    if (this.user) {
+      this.loadUserInfo()
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

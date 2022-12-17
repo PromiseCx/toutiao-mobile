@@ -10,48 +10,48 @@
 </template>
 
 <script>
-import "cropperjs/dist/cropper.css";
-import Cropper from "cropperjs";
-import { upateUserPhotoAPI } from "@/api/user";
+import 'cropperjs/dist/cropper.css'
+import Cropper from 'cropperjs'
+import { upateUserPhotoAPI } from '@/api/user'
 
 export default {
-  name: "UpdatePhoto",
-  data() {
+  name: 'UpdatePhoto',
+  data () {
     return {
-      cropper: null,
-    };
+      cropper: null
+    }
   },
   props: {
     img: {
       type: [String, Object],
-      required: true,
-    },
+      required: true
+    }
   },
-  mounted() {
-    const image = this.$refs.img;
+  mounted () {
+    const image = this.$refs.img
     this.cropper = new Cropper(image, {
       viewMode: 1,
-      dragMode: "move",
+      dragMode: 'move',
       aspectRatio: 1,
       autoCropArea: 1,
       cropBoxMovable: false,
       cropBoxResizable: false,
       background: false,
-      movable: true,
-    });
+      movable: true
+    })
   },
   methods: {
-    onConfirm() {
+    onConfirm () {
       this.cropper.getCroppedCanvas().toBlob(async (blob) => {
-        const formDate = new FormData();
-        formDate.append("photo", blob);
-        const { data } = await upateUserPhotoAPI(formDate);
-        this.$emit('close');
-        this.$emit('update-photo',data.data.photo);
-      });
-    },
-  },
-};
+        const formDate = new FormData()
+        formDate.append('photo', blob)
+        const { data } = await upateUserPhotoAPI(formDate)
+        this.$emit('close')
+        this.$emit('update-photo', data.data.photo)
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -84,4 +84,3 @@ export default {
   max-width: 100%;
 }
 </style>>
-

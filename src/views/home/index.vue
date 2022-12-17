@@ -50,63 +50,63 @@
 </template>
 
 <script>
-import { getUserChannelsAPI } from "@/api/user";
-import ArticleList from "./components/article-list.vue";
-import ChannelEdit from "./components/channel-edit.vue";
-import { mapState } from "vuex";
-import channelEditVue from "./components/channel-edit.vue";
-import { getItem } from "@/utils/storage";
+import { getUserChannelsAPI } from '@/api/user'
+import ArticleList from './components/article-list.vue'
+import ChannelEdit from './components/channel-edit.vue'
+import { mapState } from 'vuex'
+import channelEditVue from './components/channel-edit.vue'
+import { getItem } from '@/utils/storage'
 
 export default {
-  name: "HomeIndex",
+  name: 'HomeIndex',
   components: {
     ArticleList,
-    ChannelEdit,
+    ChannelEdit
   },
-  data() {
+  data () {
     return {
       active: 0,
       channels: [],
-      isChannelEditShow: false,
-    };
+      isChannelEditShow: false
+    }
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(['user'])
   },
   methods: {
-    async loadChannels() {
+    async loadChannels () {
       try {
         // this.channels = data.data.channels;
         // 根据是否登录来请求数据
 
-        let channels = [];
+        let channels = []
         if (this.user) {
-          const { data } = await getUserChannelsAPI();
-          channels = data.data.channels;
+          const { data } = await getUserChannelsAPI()
+          channels = data.data.channels
         } else {
-          const localChannels = getItem("TOUTIAO_CHANNELS");
+          const localChannels = getItem('TOUTIAO_CHANNELS')
           if (localChannels) {
-            channels = localChannels;
+            channels = localChannels
           } else {
-            const { data } = await getUserChannelsAPI();
-            channels = data.data.channels;
+            const { data } = await getUserChannelsAPI()
+            channels = data.data.channels
           }
         }
-        this.channels = channels;
+        this.channels = channels
       } catch (error) {
-        console.log(error);
-        this.$toast("获取频道列表失败！");
+        console.log(error)
+        this.$toast('获取频道列表失败！')
       }
     },
-    onUpdateActive(index, isChannelEditShow = true) {
-      this.active = index;
-      this.isChannelEditShow = isChannelEditShow;
-    },
+    onUpdateActive (index, isChannelEditShow = true) {
+      this.active = index
+      this.isChannelEditShow = isChannelEditShow
+    }
   },
-  created() {
-    this.loadChannels();
-  },
-};
+  created () {
+    this.loadChannels()
+  }
+}
 </script>
 
 <style scoped lang="less">

@@ -1,7 +1,7 @@
 <template>
   <div class="search-container">
     <!-- 搜索栏 -->
-    <!-- 
+    <!--
         van-search 外层使用form，且action不为空，在ios中可以显示搜索按钮
      -->
     <form action="/" class="search-form">
@@ -41,49 +41,49 @@
 </template>
 
 <script>
-import SearchHistory from "./components/search-history.vue";
-import SearchResult from "./components/search-result.vue";
-import SearchSuggestion from "./components/search-suggestion.vue";
-import { setItem, getItem } from "@/utils/storage";
+import SearchHistory from './components/search-history.vue'
+import SearchResult from './components/search-result.vue'
+import SearchSuggestion from './components/search-suggestion.vue'
+import { setItem, getItem } from '@/utils/storage'
 
 export default {
-  name: "SearchIndex",
+  name: 'SearchIndex',
   components: {
     SearchHistory,
     SearchResult,
-    SearchSuggestion,
+    SearchSuggestion
   },
-  data() {
+  data () {
     return {
-      searchText: "",
+      searchText: '',
       isResultShow: false,
-      searchHistories: getItem("TOUTIAO_SEARCH_HISTORIES") || [],
-    };
+      searchHistories: getItem('TOUTIAO_SEARCH_HISTORIES') || []
+    }
   },
   watch: {
-    searchHistories(newVal) {
-      setItem("TOUTIAO_SEARCH_HISTORIES", newVal);
-    },
+    searchHistories (newVal) {
+      setItem('TOUTIAO_SEARCH_HISTORIES', newVal)
+    }
   },
   methods: {
-    onSearch(val) {
+    onSearch (val) {
       // 更新文本框
-      this.searchText = val;
+      this.searchText = val
       // 搜索历史记录
       // 不要有重复搜索历史记录,最新的排在最前面
-      const index = this.searchHistories.indexOf(val);
+      const index = this.searchHistories.indexOf(val)
       if (index !== -1) {
-        this.searchHistories.splice(index, 1);
+        this.searchHistories.splice(index, 1)
       }
-      this.searchHistories.unshift(val);
+      this.searchHistories.unshift(val)
       // 渲染搜索结果
-      this.isResultShow = true;
+      this.isResultShow = true
     },
-    onCancel() {
-      this.$router.back();
-    },
-  },
-};
+    onCancel () {
+      this.$router.back()
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">

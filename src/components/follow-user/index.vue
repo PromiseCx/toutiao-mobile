@@ -23,58 +23,58 @@
 </template>
 
 <script>
-import { addFollowAPI, deleteFollowAPI } from "@/api/user";
+import { addFollowAPI, deleteFollowAPI } from '@/api/user'
 
 export default {
-  name: "FollowUSer",
+  name: 'FollowUSer',
   // 自定义v-model 的数据名称，默认为：value，input
   model: {
-    prop: "isFollowed",
-    event: "update-is_followed",
+    prop: 'isFollowed',
+    event: 'update-is_followed'
   },
   props: {
     isFollowed: {
       type: Boolean,
-      required: true,
+      required: true
     },
     userId: {
       type: [Number, String],
-      required: true,
-    },
+      required: true
+    }
   },
-  data() {
+  data () {
     return {
-      loading: false,
-    };
+      loading: false
+    }
   },
   methods: {
-    async onFollow() {
-      this.loading = true;
+    async onFollow () {
+      this.loading = true
       try {
         if (this.isFollowed) {
-          await deleteFollowAPI(this.userId);
+          await deleteFollowAPI(this.userId)
         } else {
           /**
            * ??  400 bad request ??
            * 自己不能关注自己 会报出400错误
            */
-          await addFollowAPI({ userId: this.userId });
-          this.$toast("关注成功！");
+          await addFollowAPI({ userId: this.userId })
+          this.$toast('关注成功！')
         }
 
-        this.$emit("update-is_followed", !this.isFollowed);
+        this.$emit('update-is_followed', !this.isFollowed)
       } catch (err) {
-        console.log(err);
-        let message = "操作失败，请重试！";
+        console.log(err)
+        let message = '操作失败，请重试！'
         if (err.response && err.response.status === 400) {
-          message = "操作失败，用户不能自己关注自己！";
+          message = '操作失败，用户不能自己关注自己！'
         }
-        this.$toast(message);
+        this.$toast(message)
       }
-      this.loading = false;
-    },
-  },
-};
+      this.loading = false
+    }
+  }
+}
 </script>
 
 <style>
